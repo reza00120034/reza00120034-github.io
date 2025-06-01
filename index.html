@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>ربات چت فارسی ساده 🤖</title>
+  <style>
+    body { font-family: sans-serif; background: #fefefe; direction: rtl; padding: 20px; }
+    #chat { border: 1px solid #ccc; border-radius: 10px; padding: 10px; height: 400px; overflow-y: auto; background: #fff; }
+    .msg { margin: 10px 0; }
+    .user { color: #1e88e5; }
+    .bot { color: #43a047; }
+    #input { width: 100%; padding: 10px; margin-top: 10px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>🤖 ربات چت فارسی (نسخه بدون API)</h2>
+  <div id="chat"></div>
+  <input id="input" placeholder="سوالی بپرس یا چیزی بنویس..." />
+
+  <script>
+    const chat = document.getElementById("chat");
+    const input = document.getElementById("input");
+
+    const replies = {
+      "سلام": ["سلام! حالت چطوره؟", "درود بر تو!", "سلام عزیز دل 😄"],
+      "اسم": ["من یه ربات ساده‌ام! تو چی؟", "اسم من هوش مصنوعی نیست، ولی باهوشم 😎"],
+      "جوک": ["چرا مرغ از خیابون رد شد؟ چون می‌خواست بره اون‌ور!", "یه روز یه خرس رفت مغازه گفت: عسل داری؟ گفتن نه، گفت پس خدافظ!"],
+      "خداحافظ": ["خداحافظ! بازم بیا 😄", "تا دیدار بعدی!"],
+      "حالت": ["من همیشه خوبم، چون کدم خطا نمی‌ده 🤓", "تو خوبی؟ من که روبه‌راهم!"],
+    };
+
+    function getReply(text) {
+      text = text.trim();
+      for (let key in replies) {
+        if (text.includes(key)) {
+          let options = replies[key];
+          return options[Math.floor(Math.random() * options.length)];
+        }
+      }
+      return "من هنوز اونقدر باهوش نیستم، ولی دارم یاد می‌گیرم! 🤖";
+    }
+
+    input.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        const userText = input.value;
+        if (!userText) return;
+        chat.innerHTML += `<div class="msg user">🧑: ${userText}</div>`;
+        input.value = "";
+
+        const botText = getReply(userText);
+        setTimeout(() => {
+          chat.innerHTML += `<div class="msg bot">🤖: ${botText}</div>`;
+          chat.scrollTop = chat.scrollHeight;
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>
